@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Patent Search</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f7fa;
+            margin: 0;
+            padding: 2rem;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        form {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            max-width: 500px;
+            margin: 2rem auto;
+        }
+        form p {
+            margin-bottom: 1rem;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.3rem;
+            font-weight: bold;
+        }
+        input[type="date"] {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            width: 100%;
+            padding: 0.7rem;
+            background-color: #3498db;
+            border: none;
+            color: white;
+            font-size: 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        h2 {
+            text-align: center;
+            margin-top: 2rem;
+            color: #34495e;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            max-width: 700px;
+            margin: 1rem auto;
+        }
+        li {
+            background: white;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+        }
+        p {
+            text-align: center;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>TravisIP</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        <p>
+            <label for="id_start_date">Start date:</label>
+            <input type="date" name="start_date" required id="id_start_date">
+        </p>
+        <p>
+            <label for="id_end_date">End date:</label>
+            <input type="date" name="end_date" required id="id_end_date">
+        </p>
+        <button type="submit">Search</button>
+    </form>
+
+    {% if patents %}
+        <h2>Patents Found:</h2>
+        <ul>
+            {% for patent in patents %}
+                <li>
+                    <strong>Patent Date:</strong> {{ patent.patent_date }}<br>
+                    <strong>Patent Data:</strong> {{ patent.patent_data|linebreaks }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% elif patents is not none %}
+        <p>No patents found in that range.</p>
+    {% endif %}
+</body>
+</html>
