@@ -1,6 +1,6 @@
 from django.urls import path
-from . import views
+from .views import patent_search
 
 urlpatterns = [
-    path('patents/', views.patent_search, name='patent_search'),
+    path('patents/', patent_search, name='patent_search'),
 ]
